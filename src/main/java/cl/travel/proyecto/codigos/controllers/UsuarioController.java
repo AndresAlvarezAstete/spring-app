@@ -33,13 +33,31 @@ public class UsuarioController {
 	@PostMapping("/usuarios")
 	public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
 		servicio.guardarUsuario(usuario);
-		return ("redirect:usuarios");
+		return ("redirect:/usuarios");
 	}
 	
 	@GetMapping("/usuarios/editar/{id}")
 	public String mostrarFormEditar(@PathVariable Long id, Model model) {
 		model.addAttribute("usuario", servicio.obtenerUsuarioPorId(id));
 		return ("admin/usuarios/editar_usuario");
+	}
+	
+	@PostMapping("/usuarios/{id}")
+	public String editarUsuario(@PathVariable Long id, @ModelAttribute("usuario") Usuario usuario, Model model) {
+		Usuario usuarioExistente = servicio.obtenerUsuarioPorId(id);
+		usuarioExistente.setId(id);
+		usuarioExistente.setRut(usuario.getRut());
+		usuarioExistente.setNombre(usuario.getNombre());
+		usuarioExistente.setApellido(usuario.getApellido());
+		usuarioExistente.setCorreo(usuario.getCorreo());
+		servicio.editarUsuario(usuarioExistente);
+		return ("redirect:/usuarios");
+	}
+	
+	@GetMapping("/usuarios/{id}")
+	public String eliminarUsuario(@PathVariable Long id) {
+		servicio.eliminarUsuario(id);
+		return ("redirect:/usuarios");
 	}
 
 }

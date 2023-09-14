@@ -13,4 +13,7 @@ public interface IUsuarioService {
 	public Usuario obtenerUsuarioPorId(Long id);
 	
 	public Usuario editarUsuario(Usuario usuario);
+	
+	public void eliminarUsuario(Long id);
+	
 }

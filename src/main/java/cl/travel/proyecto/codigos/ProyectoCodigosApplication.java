@@ -21,12 +21,13 @@ public class ProyectoCodigosApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		/*
-		Usuario usuario1 = new Usuario("16921369-0", "Andres", "Alvarez", "aalvarez@travel.cl");
+		Usuario usuario1 = new Usuario("16921369-0", "Andres", "Alvarez", "aalvarez@travel.cl", "Administrador", "2023-09-14 12:59:00", "2023-09-14 13:00:00");
 		repositorio.save(usuario1);
 		
-		Usuario usuario2 = new Usuario("16921369-1", "Andres", "Astete", "aastete@travel.cl");
+		Usuario usuario2 = new Usuario("16921369-1", "Andres", "Astete", "aastete@travel.cl", "Administrador", "2023-09-14 12:59:00", "2023-09-14 13:00:00");
 		repositorio.save(usuario2);
 		*/
 	}
+	
 
 }
