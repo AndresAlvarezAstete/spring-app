@@ -70,4 +70,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public Rol editarRol(Rol rol) {
 		return repositorioR.save(rol);
 	}
+
+	@Override
+	public void eliminarRol(Long id) {
+		repositorioR.deleteById(id);
+	}
 }

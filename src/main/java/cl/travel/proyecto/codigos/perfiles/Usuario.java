@@ -39,10 +39,10 @@ public class Usuario implements Serializable {
     private String correo;
 	
 	@ManyToMany
-	private Set<Perfil> perfiles;
+	private Set<Perfil> perfiles = null;
 	
 	@ManyToMany
-	private Set<Rol> roles;
+	private Set<Rol> roles = null;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

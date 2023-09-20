@@ -62,44 +62,56 @@
 										<td th:text="${rol.nombre}">Nombre</td>
 										<td th:text="${rol.descripcion}">Texto plano</td>
 										<td>
-											<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEditarRol">Editar</button>
-											<a href="" class="btn btn-danger">Eliminar</a>
+											<button type="button" class="btn btn-success" data-toggle="modal"
+												th:data-target="'#modalEditarRol' + ${rol.id}">Editar</button>
+											<a type="button" class="btn btn-danger"
+												th:href="@{/roles/{id}(id=${rol.id})}">Eliminar</a>
 										</td>
-										
-														<!-- Editar Rol Modal -->
-				<div class="modal fade" id="modalEditarRol" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="">Editar Rol</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<form th:action="@{/roles/{id}(id=${rol.id})}" th:object="${rol}" method="post">
-									<input class="form-group">
-										<label for="nombre">Nombre</label>
-										<input type="text" name="nombre"  class="form-control" 
-											placeholder="Ingrese nombre de rol">
-									</div>
-									<div class="form-group">
-										<label for="descripcion">Descripción</label>
-										<input type="text" name="descripcion" class="form-control" 
-											placeholder="Ingrese una descripción del rol">
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="exampleCheckEdit">
-									</div>
-								</form>
-								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary" form="formEditarRol">Guardar</button>
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</butto>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>	
+
+										<!-- Editar Rol Modal -->
+										<div class="modal fade" th:id="'modalEditarRol' + ${rol.id}" tabindex="-1"
+											role="dialog" aria-labelledby="" aria-hidden="true">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="">Editar Rol</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+
+													<div class="modal-body">
+														<form th:action="@{'/roles/' + ${rol.id}}" th:object="${rol}"
+															method="post" th:id="'formEditarRol' + ${rol.id}">
+															<div class="form-group">
+																<label for="nombre">Nombre</label>
+																<input type="text" name="nombre" class="form-control"
+																	th:value="${rol.nombre}"
+																	placeholder="Ingrese nombre de rol">
+															</div>
+															<div class="form-group">
+																<label for="descripcion">Descripción</label>
+																<input type="text" name="descripcion"
+																	class="form-control" th:value="${rol.descripcion}"
+																	placeholder="Ingrese una descripción del rol">
+															</div>
+															<div class="form-check">
+																<input type="checkbox" class="form-check-input"
+																	id="exampleCheckEdit">
+															</div>
+														</form>
+													</div>
+
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-primary"
+															th:form="'formEditarRol' + ${rol.id}">Guardar</button>
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Cerrar</button>
+													</div>
+												</div>
+											</div>
+										</div>
 									</tr>
 								</tbody>
 							</table>
@@ -112,7 +124,7 @@
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="">Agregar Rol</h5>
+								<h5 class="modal-title" id="1">Agregar Rol</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -140,18 +152,11 @@
 							</div>
 						</div>
 					</div>
+
 				</div>
-				
-						
-				
-				
-				
 			</div>
+
 		</div>
-
-		<div th:replace="shared/footer :: footer"></div>
-
-	</div>
 
 </body>
 

@@ -25,4 +25,6 @@ public interface IUsuarioService {
 	
 	public Rol editarRol(Rol rol);
 	
+	public void eliminarRol(Long id);
+	
 }

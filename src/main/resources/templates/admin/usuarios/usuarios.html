@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{shared/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{shared/layout}">
 
 <head th:replace="shared/layout :: head">
 	<meta>
@@ -40,9 +39,8 @@
 					<div class="row">
 						<div class="col-12">
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal">
-								Agregar Usuario (Modal)
+								Agregar Usuario
 							</button>
-							<a th:href="@{/usuarios/nuevo_usuario}" class="btn btn-primary">Agregar Usuario</a>
 						</div>
 					</div>
 
@@ -52,12 +50,12 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<!-- <th>Imagen</th> -->
 										<th>Rut</th>
 										<th>Nombre</th>
 										<th>Apellido</th>
 										<th>Correo</th>
 										<th>Perfil</th>
+										<th>Rol</th>
 										<th>Actual Conexión</th>
 										<th>Ultima Conexión</th>
 										<th>Acciones</th>
@@ -67,17 +65,76 @@
 								<tbody>
 									<tr th:each="usuario : ${usuarios}">
 										<td th:text="${usuario.id}">1</td>
-										<!-- <td><img src="" alt=""></td> -->
 										<td th:text="${usuario.rut}">16921369-0</td>
 										<td th:text="${usuario.nombre}">Andrés</td>
 										<td th:text="${usuario.apellido}">Álvarez</td>
 										<td th:text="${usuario.correo}">aalvarez@travel.cl</td>
+										<td></td>
+										<td>Administrador</td>
+										<td></td>
+										<td></td>
 										<td>
-											<a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}"
-												class="btn btn-success">Editar</a>
-											<a th:href="@{/usuarios/{id}(id=${usuario.id})}"
-												class="btn btn-danger">Eliminar</a>
+											<button type="button" class="btn btn-success" data-toggle="modal"
+												th:data-target="'#modalEditarUser' + ${usuario.id}">Editar</button>
+											<a type="button" class="btn btn-danger"
+												th:href="@{/usuarios/{id}(id=${usuario.id})}">Eliminar</a>
 										</td>
+
+										<!-- Editar User Modal -->
+										<div class="modal fade" th:id="'modalEditarUser' + ${usuario.id}" tabindex="-1"
+											role="dialog" aria-labelledby="" aria-hidden="true">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="">Editar Usuario</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+
+													<div class="modal-body">
+														<form th:action="@{'/usuarios/' + ${usuario.id}}" th:object="${usuario}" 
+														method="post" th:id="'formEditarUser' + ${usuario.id}">
+															<div class="form-group">
+																<label for="rut">Rut</label>
+																<input type="text" name="rut" class="form-control"
+																	th:value="${usuario.rut}" placeholder="Ingrese rut">
+															</div>
+															<div class="form-group">
+																<label for="nombre">Nombre</label>
+																<input type="text" name="nombre" class="form-control"
+																	th:value="${usuario.nombre}"
+																	placeholder="Ingrese nombre">
+															</div>
+															<div class="form-group">
+																<label for="apellido">Apellido</label>
+																<input type="text" name="apellido" class="form-control"
+																	th:value="${usuario.apellido}"
+																	placeholder="Ingrese apellido">
+															</div>
+															<div class="form-group">
+																<label for="correo">Correo</label>
+																<input type="email" name="correo" class="form-control"
+																	th:value="${usuario.correo}"
+																	placeholder="Ingrese correo">
+															</div>
+															<div class="form-check">
+																<input type="checkbox" class="form-check-input"
+																	id="exampleCheckEdit">
+															</div>
+														</form>
+													</div>
+
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-primary"
+															th:form="'formEditarUser' + ${usuario.id}">Guardar</button>
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Cerrar</button>
+													</div>
+												</div>
+											</div>
+										</div>
 									</tr>
 								</tbody>
 							</table>
@@ -86,8 +143,7 @@
 				</section>
 
 				<!-- Modal -->
-				<div class="modal fade" id="userModal" tabindex="-1" role="dialog"
-					aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -97,54 +153,43 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<form th:action="@{/usuarios}" th:object="${usuario}">
+								<form id="userForm" th:action="@{/usuarios}" th:object="${usuario}" method="post">
 									<div class="form-group">
 										<label for="rut">Rut</label>
-										<input type="text" class="form-control" id="rut"
-											   placeholder="Ingrese Rut" th:field="*{usuarios.rut}" >
+										<input type="text" name="rut" th:text="${rut}" class="form-control"
+											placeholder="Ingrese Rut">
 									</div>
 									<div class="form-group">
 										<label for="nombre">Nombre</label>
-										<input type="text" class="form-control" id="nombre"
-											   placeholder="Ingrese Nombre" th:field="*{usuarios.nombre}" >
+										<input type="text" name="nombre" th:text="${nombre}" class="form-control"
+											placeholder="Ingrese Nombre">
 									</div>
 									<div class="form-group">
 										<label for="apellido">Apellido</label>
-										<input type="text" class="form-control" id="apellido"
-											   placeholder="Ingrese Apellido" th:field="*{usuarios.apellido}" >
+										<input type="text" name="apellido" th:text="${apellido}" class="form-control"
+											placeholder="Ingrese Apellido">
 									</div>
 									<div class="form-group">
-										<label for="email">Correo</label>
-										<input type="email" class="form-control" id="correo"
-											aria-describedby="emailHelp" placeholder="Ingrese Correo" th:field="*{usuarios.correo}" >
-									</div>
-									<div class="form-group">
-										<label for="squareSelect">Seleccionar Perfil</label>
-										<select class="form-control input-square"  id="squareSelect">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
-									</select>
+										<label for="correo">Correo</label>
+										<input type="email" name="correo" th:text="${correo}" class="form-control"
+											aria-describedby="emailHelp" placeholder="Ingrese Correo">
 									</div>
 									<div class="form-check">
 										<input type="checkbox" class="form-check-input" id="exampleCheck1">
 									</div>
 								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary">Guardar</button>
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary" form="userForm">Guardar</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+								</div>
 							</div>
 						</div>
 					</div>
+
 				</div>
-
 			</div>
-		</div>
 
-		<div th:replace="shared/footer :: footer"></div>
+		</div>
 </body>
 
 </html>
