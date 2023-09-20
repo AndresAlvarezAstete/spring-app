@@ -2,10 +2,20 @@ package cl.travel.proyecto.codigos.perfiles;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="perfiles")
 public class Perfil implements Serializable {
 
 	private static final long serialVersionUID = -210478836059490974L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String nombre;

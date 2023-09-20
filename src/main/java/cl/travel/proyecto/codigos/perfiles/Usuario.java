@@ -2,6 +2,7 @@ package cl.travel.proyecto.codigos.perfiles;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,8 +38,11 @@ public class Usuario implements Serializable {
 	@Column(name="email", nullable = false, length = 50, unique = true)
     private String correo;
 	
-	@Column(name="perfil", nullable = false, length = 50)
-	private Perfil perfil;
+	@ManyToMany
+	private Set<Perfil> perfiles;
+	
+	@ManyToMany
+	private Set<Rol> roles;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -47,31 +52,34 @@ public class Usuario implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lastLogin;
 	
-	public Usuario(Long id, String rut, String nombre, String apellido, String correo, Perfil perfil, DateTimeFormat actualLogin,
-			Date lastLogin) {
+	public Usuario(Long id, String rut, String nombre, String apellido, String correo, Set<Perfil> perfiles,
+			Set<Rol> roles, Date actualLogin, Date lastLogin) {
 		super();
 		this.id = id;
 		this.rut = rut;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = correo;
-		this.perfil = perfil;
-		this.actualLogin = (Date) actualLogin;
+		this.perfiles = perfiles;
+		this.roles = roles;
+		this.actualLogin = actualLogin;
 		this.lastLogin = lastLogin;
 	}
 	
-	public Usuario(String rut, String nombre, String apellido, String correo, Perfil perfil, DateTimeFormat actualLogin,
-			Date lastLogin) {
+	public Usuario(String rut, String nombre, String apellido, String correo, Set<Perfil> perfiles,
+			Set<Rol> roles, Date actualLogin, Date lastLogin) {
 		super();
 		this.rut = rut;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = correo;
-		this.perfil = perfil;
-		this.actualLogin = (Date) actualLogin;
+		this.perfiles = perfiles;
+		this.roles = roles;
+		this.actualLogin = actualLogin;
 		this.lastLogin = lastLogin;
 	}
-	
+
+
 	public Usuario() {
 		
 	}
@@ -115,13 +123,21 @@ public class Usuario implements Serializable {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	
-	public Perfil getPerfil() {
-		return perfil;
+
+	public Set<Perfil> getPerfiles() {
+		return perfiles;
 	}
 
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
+	public void setPerfiles(Set<Perfil> perfiles) {
+		this.perfiles = perfiles;
+	}
+
+	public Set<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Rol> roles) {
+		this.roles = roles;
 	}
 
 	public Date getActualLogin() {
@@ -143,6 +159,7 @@ public class Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", rut=" + rut + ", nombre=" + nombre + ", apellido=" + apellido + ", correo="
-				+ correo + ", perfil=" + perfil + ", actualLogin=" + actualLogin + ", lastLogin=" + lastLogin + "]";
+				+ correo + ", perfiles=" + perfiles + ", roles=" + roles + ", actualLogin=" + actualLogin
+				+ ", lastLogin=" + lastLogin + "]";
 	}
 }

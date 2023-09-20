@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{shared/layout}">
+
+<head th:replace="shared/layout :: head">
+	<meta>
+	<title>Roles - Atlantis</title>
+
+</head>
+
+<body>
+
+	<div class="main-panel" layout:fragment="page-content">
+		<div class="content">
+			<div class="page-inner">
+				<div class="page-header">
+					<h4 class="page-title">Roles</h4>
+					<ul class="breadcrumbs">
+						<li class="nav-home">
+							<a href="/">
+								<i class="flaticon-home"></i>
+							</a>
+						</li>
+						<li class="separator">
+							<i class="flaticon-right-arrow"></i>
+						</li>
+						<li class="nav-item">
+							<a href="#">Adm de Usuarios</a>
+						</li>
+						<li class="separator">
+							<i class="flaticon-right-arrow"></i>
+						</li>
+						<li class="nav-item">
+							<a href="">Roles</a>
+						</li>
+					</ul>
+				</div>
+				<section class="p-3">
+					<div class="row">
+						<div class="col-12">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRol">
+								Agregar Rol
+							</button>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12">
+							<table class="table table-hstriped table-hover mt-3 text-center table-bordered">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre</th>
+										<th>Descripción</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr th:each="rol : ${roles}">
+										<td th:text="${rol.id}">1</td>
+										<td th:text="${rol.nombre}">Nombre</td>
+										<td th:text="${rol.descripcion}">Texto plano</td>
+										<td>
+											<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEditarRol">Editar</button>
+											<a href="" class="btn btn-danger">Eliminar</a>
+										</td>
+										
+														<!-- Editar Rol Modal -->
+				<div class="modal fade" id="modalEditarRol" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="">Editar Rol</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form th:action="@{/roles/{id}(id=${rol.id})}" th:object="${rol}" method="post">
+									<input class="form-group">
+										<label for="nombre">Nombre</label>
+										<input type="text" name="nombre"  class="form-control" 
+											placeholder="Ingrese nombre de rol">
+									</div>
+									<div class="form-group">
+										<label for="descripcion">Descripción</label>
+										<input type="text" name="descripcion" class="form-control" 
+											placeholder="Ingrese una descripción del rol">
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="exampleCheckEdit">
+									</div>
+								</form>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary" form="formEditarRol">Guardar</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</butto>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+
+				<!-- Agregar Rol Modal -->
+				<div class="modal fade" id="modalRol" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="">Agregar Rol</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form id="formRol" th:action="@{/roles}" th:object="${rol}" method="post">
+									<div class="form-group">
+										<label for="nombre">Nombre</label>
+										<input type="text" name="nombre" th:text="${nombre}" class="form-control"
+											placeholder="Ingrese nombre de rol">
+									</div>
+									<div class="form-group">
+										<label for="descripcion">Descripción</label>
+										<input type="text" name="descripcion" th:text="${descripcion}"
+											class="form-control" placeholder="Ingrese una descripción del rol">
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="exampleCheck1">
+									</div>
+								</form>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary" form="formRol">Guardar</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</butto>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+						
+				
+				
+				
+			</div>
+		</div>
+
+		<div th:replace="shared/footer :: footer"></div>
+
+	</div>
+
+</body>
+
+</html>

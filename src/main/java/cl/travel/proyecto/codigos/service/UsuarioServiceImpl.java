@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.travel.proyecto.codigos.perfiles.Rol;
 import cl.travel.proyecto.codigos.perfiles.Usuario;
-
+import cl.travel.proyecto.codigos.repository.RolRepository;
 import cl.travel.proyecto.codigos.repository.UsuarioRepository;
 
 @Service
@@ -18,6 +19,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	
 	@Autowired
 	private UsuarioRepository repositorio; 
+	
+	@Autowired
+	private RolRepository repositorioR;
 
 	@Override
 	public List<Usuario> listarUsuarios() {
@@ -45,5 +49,25 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public void eliminarUsuario(Long id) {
 		repositorio.deleteById(id);
+	}
+
+	@Override
+	public List<Rol> listarRoles() {
+		return repositorioR.findAll();
+	}
+
+	@Override
+	public Rol guardarRol(Rol rol) {
+		return repositorioR.save(rol);
+	}
+
+	@Override
+	public Rol obtenerRolPorId(Long id) {
+		return repositorioR.findById(id).get();
+	}
+
+	@Override
+	public Rol editarRol(Rol rol) {
+		return repositorioR.save(rol);
 	}
 }
