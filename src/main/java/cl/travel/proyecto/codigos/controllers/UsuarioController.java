@@ -1,5 +1,7 @@
 package cl.travel.proyecto.codigos.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import cl.travel.proyecto.codigos.perfiles.Usuario;
+import cl.travel.proyecto.codigos.repository.UsuarioRepository;
 import cl.travel.proyecto.codigos.service.IUsuarioService;
 
 @Controller
@@ -17,9 +21,16 @@ public class UsuarioController {
 	@Autowired
 	private IUsuarioService servicio;
 	
+	private UsuarioRepository usuarioRepository;
+	
+	public List<Usuario> listarUsuarios() {
+		return usuarioRepository.findallWithRoles();
+	}
+	
 	@GetMapping("/usuarios")
 	public String listarUsuarios(Model model) {
 		model.addAttribute("usuarios", servicio.listarUsuarios());
+		model.addAttribute("roles", servicio.listarRoles());
 		return ("admin/usuarios/usuarios");
 	}
 	
@@ -59,5 +70,4 @@ public class UsuarioController {
 		servicio.eliminarUsuario(id);
 		return ("redirect:/usuarios");
 	}
-
 }

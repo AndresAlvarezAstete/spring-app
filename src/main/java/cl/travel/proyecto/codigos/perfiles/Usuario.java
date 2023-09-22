@@ -162,4 +162,8 @@ public class Usuario implements Serializable {
 				+ correo + ", perfiles=" + perfiles + ", roles=" + roles + ", actualLogin=" + actualLogin
 				+ ", lastLogin=" + lastLogin + "]";
 	}
+
+	public Rol getPerfil() {
+		return null;
+	}
 }

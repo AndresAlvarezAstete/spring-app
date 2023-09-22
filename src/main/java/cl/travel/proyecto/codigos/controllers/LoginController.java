@@ -7,11 +7,10 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class DashboardController {
+public class LoginController {
 
-	@GetMapping("")
-	
-	public String inicio() {
-		return "dashboard";
+	@GetMapping("/login")
+	public String login() {
+		return "login";
 	}
 }
